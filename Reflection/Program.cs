@@ -43,6 +43,8 @@ namespace Reflection
             return Activator.CreateInstance(Types);
         }
 
+        #region 속성 Propertys
+
         /// <summary>
         /// 특정 프로퍼티 값을 변경합니다.
         /// </summary>
@@ -170,6 +172,8 @@ namespace Reflection
             }
         }
 
+        #endregion
+
         /// <summary>
         /// 클래스 타입과 인스턴스를 반환합니다.
         /// </summary>
@@ -192,5 +196,6 @@ namespace Reflection
                 FinalInstanceType = InstanceType;
             }
         }
+   
     }
 }
