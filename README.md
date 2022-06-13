@@ -32,4 +32,4 @@
     * 🕒 Version : `.NET 6`
 * ✔ Language : `C#`
 * ✔ IDE : `Visual Studio`
-🕒 Version : `2022`
+    * 🕒 Version : `2022`
