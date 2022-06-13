@@ -20,7 +20,6 @@
 
    1. 속성(Property) 할당(SetValue)
    2. 속성(Property) 읽기(GetValue)
-   3. 세부 기능 C
 
 ## 💻 개발 환경(Develop Environment)
 
