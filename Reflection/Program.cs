@@ -1,7 +1,4 @@
 ﻿using Reflection.Models;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace Reflection
 {
@@ -196,6 +193,5 @@ namespace Reflection
                 FinalInstanceType = InstanceType;
             }
         }
-   
     }
 }
