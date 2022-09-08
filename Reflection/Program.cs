@@ -38,23 +38,25 @@ namespace Reflection
             });
             /* 네임스페이스.클래스명으로 특정 프로퍼티 값 설정하기 */
             SetPropertyValue("Reflection.Models.User", "Number", 2);
+            
             /* 타입으로 프로퍼티 값 가져오기 */
-            User users = new User();
+            // 기존 객체에서 편집.
+            User users = (User)CreateInstance("Reflection.Models.User");
             users.Name = "Names";
-            var ListValue = GetPropretysValue("Reflection.Models.User", users);
 
+            var ListValue = GetPropretysValue("Reflection.Models.User", users);
+            //var ListValue = GetPropretysValue("Reflection.Models.User", CreateInstance("Reflection.Models.User"));
             foreach (var item in ListValue)
             {
                 Console.WriteLine(item);
             }
 
             /* 타입으로 메서드 호출하기 */
-            object obj = CreateInstance("Reflection.Computer");
             // 매개 변수가 없을 경우
-            CallMethod(obj, obj.GetType().GetMethod("Booting"), null);
+            CallMethod("Reflection.Computer", "Booting", null);
             // 매개 변수가 있을 경우
             // 2개 이상일 경우
-            CallMethod(obj, obj.GetType().GetMethod("Login"), new object[] { "ADMIN", "1234" });
+            CallMethod("Reflection.Computer", "Login", new object[] { "ADMIN", "1234" });
         }
 
         /// <summary>
@@ -75,8 +77,10 @@ namespace Reflection
         /// <param name="Instance">타입 인스턴스</param>
         /// <param name="Method">메소드</param>
         /// <param name="Parameter">메소드 매개변수</param>
-        static void CallMethod(object? Instance, MethodInfo Method, object?[]? Parameter)
+        static void CallMethod(string InstanceString, string MethodString, object?[]? Parameter)
         {
+            object Instance = CreateInstance(InstanceString);
+            MethodInfo Method  = Instance.GetType().GetMethod(MethodString);
             Method.Invoke(Instance, Parameter);
         }
 
