@@ -1,14 +1,33 @@
-﻿using Reflection.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Reflection.Metadata;
+using Reflection.Models;
 
 namespace Reflection
 {
+    public class Computer
+    {
+        static public void Booting()
+        {
+            Console.WriteLine("Booting..");
+        }
+
+        static public void Login(string ID, string Password)
+        {
+            Console.WriteLine($"ID : {ID}, PW : {Password}");
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
         {
+            /* 네임스페이스.클래스명으로 인스턴스 생성하기 */
             Console.WriteLine(CreateInstance("Reflection.Models.User"));
+            /* 네임스페이스.클래스명으로 특정 프로퍼티 값 가져오기 */
             Console.WriteLine(GetPropertyValue("Reflection.Models.User", "Email"));
-
+            /* 네임스페이스.클래스명으로 프로퍼티 값 설정하기 */
             SetPropretysValue("Reflection.Models.User", new Dictionary<string, object> {
                 { "Number", 1},
                 { "Name", "New Name" },
@@ -17,17 +36,25 @@ namespace Reflection
                 { "BirthDate", new DateTime{} },
                 { "Contact", "New Contact" },
             });
+            /* 네임스페이스.클래스명으로 특정 프로퍼티 값 설정하기 */
             SetPropertyValue("Reflection.Models.User", "Number", 2);
-
+            /* 타입으로 프로퍼티 값 가져오기 */
             User users = new User();
             users.Name = "Names";
-
             var ListValue = GetPropretysValue("Reflection.Models.User", users);
 
             foreach (var item in ListValue)
             {
                 Console.WriteLine(item);
             }
+
+            /* 타입으로 메서드 호출하기 */
+            object obj = CreateInstance("Reflection.Computer");
+            // 매개 변수가 없을 경우
+            CallMethod(obj, obj.GetType().GetMethod("Booting"), null);
+            // 매개 변수가 있을 경우
+            // 2개 이상일 경우
+            CallMethod(obj, obj.GetType().GetMethod("Login"), new object[] { "ADMIN", "1234" });
         }
 
         /// <summary>
@@ -39,6 +66,21 @@ namespace Reflection
             Type Types = Type.GetType(TypeString);
             return Activator.CreateInstance(Types);
         }
+
+        #region 메소드 Methods
+        #nullable enable
+        /// <summary>
+        /// 타입으로 메소드 호출합니다.
+        /// </summary>
+        /// <param name="Instance">타입 인스턴스</param>
+        /// <param name="Method">메소드</param>
+        /// <param name="Parameter">메소드 매개변수</param>
+        static void CallMethod(object? Instance, MethodInfo Method, object?[]? Parameter)
+        {
+            Method.Invoke(Instance, Parameter);
+        }
+
+        #endregion
 
         #region 속성 Propertys
 
@@ -170,7 +212,6 @@ namespace Reflection
         }
 
         #endregion
-
         /// <summary>
         /// 클래스 타입과 인스턴스를 반환합니다.
         /// </summary>
