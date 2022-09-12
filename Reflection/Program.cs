@@ -1,25 +1,30 @@
-﻿using System;
+﻿using Reflection.Models;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Reflection.Metadata;
-using Reflection.Models;
 
 namespace Reflection
 {
     public class Computer
     {
-        static public void Booting()
+        public string CPU = "INTEL i9-13900k";
+        private string GPU;
+        private string OS;
+        private string Memory;
+        private string SSD;
+        private string Mainborad;
+
+        public void Booting()
         {
             Console.WriteLine("Booting..");
         }
-
-        static public void Login(string ID, string Password)
+        public void Login(string ID, string Password)
         {
             Console.WriteLine($"ID : {ID}, PW : {Password}");
         }
     }
 
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -38,7 +43,7 @@ namespace Reflection
             });
             /* 네임스페이스.클래스명으로 특정 프로퍼티 값 설정하기 */
             SetPropertyValue("Reflection.Models.User", "Number", 2);
-            
+
             /* 타입으로 프로퍼티 값 가져오기 */
             // 기존 객체에서 편집.
             User users = (User)CreateInstance("Reflection.Models.User");
@@ -57,6 +62,10 @@ namespace Reflection
             // 매개 변수가 있을 경우
             // 2개 이상일 경우
             CallMethod("Reflection.Computer", "Login", new object[] { "ADMIN", "1234" });
+
+            /* 타입으로 필드 조회 및 수정하기 */
+            Console.WriteLine(GetFieldValue("Reflection.Computer", "CPU"));
+            SetFieldValue("Reflection.Computer", "CPU", "AMD Ryzen 9");
         }
 
         /// <summary>
@@ -69,8 +78,27 @@ namespace Reflection
             return Activator.CreateInstance(Types);
         }
 
-        #region 메소드 Methods
-        #nullable enable
+        #region 필드 Field
+        static object GetFieldValue(string InstanceString, string FieldName)
+        {
+            object Instance = CreateInstance(InstanceString);
+            FieldInfo Field = Instance.GetType().GetField(FieldName);
+
+            return Field.GetValue(Instance);
+        }
+
+        static void SetFieldValue(string InstanceString, string FieldName, object SetValue)
+        {
+            object Instance = CreateInstance(InstanceString);
+            FieldInfo Field = Instance.GetType().GetField(FieldName);
+
+            Field.SetValue(Instance, SetValue);
+        }
+        #endregion
+
+        #region 메소드 Method
+
+#nullable enable
         /// <summary>
         /// 타입으로 메소드 호출합니다.
         /// </summary>
@@ -80,13 +108,13 @@ namespace Reflection
         static void CallMethod(string InstanceString, string MethodString, object?[]? Parameter)
         {
             object Instance = CreateInstance(InstanceString);
-            MethodInfo Method  = Instance.GetType().GetMethod(MethodString);
+            MethodInfo Method = Instance.GetType().GetMethod(MethodString);
             Method.Invoke(Instance, Parameter);
         }
 
         #endregion
 
-        #region 속성 Propertys
+        #region 속성 Property
 
         /// <summary>
         /// 특정 프로퍼티 값을 변경합니다.
@@ -216,6 +244,7 @@ namespace Reflection
         }
 
         #endregion
+
         /// <summary>
         /// 클래스 타입과 인스턴스를 반환합니다.
         /// </summary>
