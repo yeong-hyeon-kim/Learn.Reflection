@@ -1,24 +1,34 @@
-## 📕 프로젝트 개요(Introduce Project)
+# 📕 Reflection
 
-### Reflection
-
-* C# 리플렉션(Reflection)을 활용하기 위한 프로젝트 입니다.
+> C#  리플렉션을 더 쉽게 이용하기 위한 모듈입니다.
 
 ## 🏷️ 기능(Function)
 
 1. [인스턴스(Instance)](#인스턴스(Instance))
-2. [속성(Property)](#속성(Property))
+2. [메소드(Method)](#메소드(Method))
+3. [속성(Property)](#속성(Property))
+4. [필드(Field)](#필드(Field))
 
 ### 세부 기능(Function Detail)
 
 #### 인스턴스(Instance)
 
-   1. 동적으로 인스턴스를 생성합니다.
+   1. 타입 반환 - ReturnType
 
 #### 속성(Property)
 
-   1. 속성(Property) 할당(SetValue)
-   2. 속성(Property) 읽기(GetValue)
+   1. 프로퍼티 수정 - SetPropertyValue
+   2. 프로퍼티 읽기 - GetPropertyValue
+   3. 여러 프로퍼티 읽기 - GetPropretysValue
+
+#### 메소드(Method)
+
+   1. 메소드 호출 - CallMethod
+
+#### 필드(Field)
+
+   1. 필드 읽기 - GetFieldValue
+   2. 필드 수정 - SetFieldValue
 
 ## 💻 개발 환경(Develop Environment)
 
