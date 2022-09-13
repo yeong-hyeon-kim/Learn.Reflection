@@ -50,7 +50,6 @@ namespace Reflection
             users.Name = "Names";
 
             var ListValue = GetPropretysValue("Reflection.Models.User", users);
-            //var ListValue = GetPropretysValue("Reflection.Models.User", CreateInstance("Reflection.Models.User"));
             foreach (var item in ListValue)
             {
                 Console.WriteLine(item);
@@ -98,7 +97,7 @@ namespace Reflection
 
         #region 메소드 Method
 
-#nullable enable
+        #nullable enable
         /// <summary>
         /// 타입으로 메소드 호출합니다.
         /// </summary>
